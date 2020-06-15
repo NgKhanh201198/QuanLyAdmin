@@ -7,7 +7,7 @@
     </ul>
 
     <!-- SEARCH FORM -->
-    <form class="form-inline ml-3">
+    <!-- <form class="form-inline ml-3">
         <div class="input-group input-group-sm">
             <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
             <div class="input-group-append">
@@ -16,7 +16,7 @@
                 </button>
             </div>
         </div>
-    </form>
+    </form> -->
 </nav>
 <!-- /.navbar -->
 
@@ -60,33 +60,70 @@
                     </a>
                 </li>
                 <li class="nav-item qlda">
-                    <a href="<?= base_url(); ?>admin/quanlydoan" class="nav-link">
-                        <i class="nav-icon fas fa-pager"></i>
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-receipt"></i>
                         <p>
-                            Quản lý đồ án sinh viên
-                            <!-- <i class="right fas fa-angle-left"></i> -->
+                            Quản lý đồ án
+                            <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item nav-con doan">
+                            <a href="<?= base_url(); ?>admin/quanlydoan" class="nav-link">
+                                <p>Đồ án</p>
+                            </a>
+                        </li>
+                        <li class="nav-item nav-con tttt">
+                            <a href="<?= base_url(); ?>admin/quanlythuctap" class="nav-link">
+                                <p>Thông tin thực tập</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item qltk">
-                    <a href="<?= base_url(); ?>admin/quanlytaikhoan" class="nav-link">
-                        <i class="nav-icon fas fa-edit"></i>
-                        <p>
-                            Tạo tài khoản
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-cog"></i>
+                        <i class="nav-icon fas fa-tasks"></i>
                         <p>
-                            Cài đặt
+                            Quản lý tài khoản<i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item nav-con giangvien">
+                            <a href="<?= base_url(); ?>admin/quanlytaikhoanGV" class="nav-link">
+                                <p>Giảng viên</p>
+                            </a>
+                        </li>
+                        <li class="nav-item nav-con sinhvien">
+                            <a href="<?= base_url(); ?>admin/quanlytaikhoanSV" class="nav-link">
+                                <p>Sinh viên</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item themtk">
+                    <a href="$" class="nav-link">
+                        <i class="nav-icon fas fa-user-plus"></i>
+                        <p>
+                            Thêm tài khoản<i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item nav-con addgv">
+                            <a href="<?= base_url(); ?>admin/themtaikhoanGV" class="nav-link">
+                                <p>Giảng viên</p>
+                            </a>
+                        </li>
+                        <li class="nav-item nav-con addsv">
+                            <a href="<?= base_url(); ?>admin/themtaikhoanSV" class="nav-link">
+                                <p>Sinh viên</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
+    <div class="thongbao alert alert-success d-none"><i class="fas fa-check"></i> Cập nhật thành công!</div>
 </aside>

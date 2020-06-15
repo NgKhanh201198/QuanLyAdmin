@@ -3,122 +3,201 @@
     padding: 0px
 }
 
-/*a.themtaikhoan {
-    position: absolute;
-    top: 10px;
-    right: 5%;
+img.show {
+    cursor: pointer;
 }
 
-.danhsach {
+
+
+.multiple--user {
+    width: 85%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    flex-flow: wrap;
+}
+
+
+
+.type-addbox {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    border: 1px solid #bbbbbb;
     position: relative;
+}
+
+.user--one {
+    width: 100%;
+    max-width: 40rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+h2.title {
+    text-align: center;
+    margin: 2rem auto;
+}
+
+.radio-button {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+    width: 100%;
+    max-width: 40rem;
+    margin: 2rem auto;
+}
+
+img.show,
+img.hide {
+    position: absolute;
     top: 0px;
     left: 0px;
-}*/
+    z-index: 10;
+    cursor: pointer;
+}
+.anpass{
+    visibility: hidden;
+}
 
-li.qlgv.addbackgroud a{
+.show-hide {
+    position: relative;
+    top: -35px;
+    left: 85%;
+}
+
+input.form-control.form-control-navbar.tk-input {
+    background: rgb(209, 231, 239);
+    font-size: 18px;
+    border: none;
+    outline: none;
+}
+
+.input-group.input-group-sm.tk-group {
+    border: none;
+    border-radius: 5px;
+    margin: auto;
+    width: 325px;
+    font-size: 18px;
+}
+
+.input-group-append.btn-tk button{
+    margin: 0px 0px 0px 15px;
+    background: rgb(209, 231, 239);
+    border-radius: 3px;
+    width: 100px;
+}
+
+.form-tk {
+    margin: 16px 0px;
+}
+
+select.selectpicker {
+    padding: 5px;
+    font-size: 18px;
+    width: 210px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    background: rgba(173, 216, 230, 0.50);
+}
+.select-group {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+select.option-tenkhoa {
+    border: 1px solid rgb(187, 187, 187);
+    border-radius: 0.25rem;
+    padding: 6px 0px;
+    margin: 5px;
+    outline: none;
+}
+select.option-tenlop {
+    border: 1px solid rgb(187, 187, 187);
+    border-radius: 0.25rem;
+    padding: 6px 0px;
+    margin: 5px;
+    outline: none;
+    text-align: left;
+}
+
+input.andi{
+    border: none;
+    border-radius: 0.25rem;
+    padding: 6px;
+    margin: 5px 5px 5px 5px;
+    outline: none;
+}
+input.anmai{
+    border: none;
+    padding: 5px;
+    margin: 4px;
+}
+input:focus{ outline: none; }
+input.show {
+    border: 1px solid rgb(187, 187, 187);
+    border-radius: 0.25rem;
+    padding: 5px;
+    margin: 5px;
+    outline: none;
+}
+
+
+.thongbao {
+    position: fixed;
+    bottom: 3%;
+    right: 5%;
+    z-index: 100;
+}
+
+.addbackgroudCon {
+    background: rgba(128, 128, 128, 0.45); !important ; 
+    border-radius: 5px;
+}
+.removebackgroud  a{
+    background: #343a40 !important ; 
+    border-radius: 5px;
+}
+
+.addbackgroud a{
     background: rgba(128, 128, 128, 0.35);
     border-radius: 5px;
 }
-li.qlsv.addbackgroud a{
-    background: rgba(128, 128, 128, 0.35);
-    border-radius: 5px;
-}
-li.qlda.addbackgroud a{
-    background: rgba(128, 128, 128, 0.35);
-    border-radius: 5px;
-}
-li.qltk.addbackgroud a{
-    background: rgba(128, 128, 128, 0.35);
-    border-radius: 5px;
-}
+
 table.table tbody tr {
   cursor: pointer;
 }
 thead tr, tbody tr{
     height: 50px;
 }
-/*.main .form__content,
-.main .object-details__content {
-    margin: 1rem 0;
-}
 
-@media (min-width: 1024px) {
-    .main .form__content,
-    .main .object-details__content {
-        margin: 0;
-    }
-}
-
-.main .form__content .input--form,
-.main .object-details__content .input--form {
-    width: auto;
-    display: -webkit-box;
-    display: -ms-flexbox;
+.input-form {
     display: flex;
-    -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
     justify-content: space-between;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
     align-items: center;
-    margin-bottom: 0.5rem;
-    font-size: 1.6rem;
 }
 
-@media (min-width: 1024px) {
-    .main .form__content .input--form,
-    .main .object-details__content .input--form {
-        max-width: 60rem;
-    }
+.object-details {
+  background: #ffffff;
+  padding: 50px 0px;   
+  height: 515px; 
 }
-
-.main .form__content .input--form label,
-.main .object-details__content .input--form label {
-    margin-bottom: 0;
-}
-
-.main .form__content .input--form input,
-.main .object-details__content .input--form input {
-    width: auto;
-    border: none;
-    padding: 0.5rem;
-    position: relative;
-}
-
-.main .form__content .input--form input .border,
-.main .object-details__content .input--form input .border {
-    border: 1px solid #333333;
-}
-
-@media (min-width: 1024px) {
-    .main .form__content .input--form input,
-    .main .object-details__content .input--form input {
-        min-width: 40rem;
-    }
-}
-
-.main .form__content .input--form input::after,
-.main .object-details__content .input--form input::after {
-    content: "";
-    width: 100%;
-    height: 2px;
-    background-color: #1d1d1d;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-}
-
-.main .form__content .form__btn,
-.main .object-details__content .form__btn {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-}
-
-.main .form__content .form__btn .primary-btn,
-.main .object-details__content .form__btn .primary-btn {
-    padding: 1rem 0;
-    width: 20%;
-    margin: 1rem;
-    font-size: 1.2rem;
-}*/
