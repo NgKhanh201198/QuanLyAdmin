@@ -124,11 +124,12 @@
                                         </div> 
                                         <div class="nbd input-form">
                                             <label> Ngày bắt đầu: </label>
-                                            <input name="ThoiGianBatDau" type="text" value="<?= $value['ThoiGianBatDau'] ?>" class="ThoiGianBatDau andi" readonly>
+                                            <input name="ThoiGianBatDau" type="text" value="<?= date_format(date_create($value['ThoiGianBatDau']),"d/m/Y") ?>" class="ThoiGianBatDau andi" readonly>
+                                            <!-- date_format(date_create($value['ThoiGianBatDau']),"d/m/Y"); -->
                                         </div>
                                         <div class="nkt input-form">
                                             <label> Ngày kết thúc: </label>
-                                            <input name="ThoiGianKetThuc" type="text" value="<?= $value['ThoiGianKetThuc'] ?>" class="ThoiGianKetThuc andi" readonly>
+                                            <input name="ThoiGianKetThuc" type="text" value="<?= date_format(date_create($value['ThoiGianKetThuc']),"d/m/Y") ?>" class="ThoiGianKetThuc andi" readonly>
                                         </div>
                                         <div class="danhgia input-form">
                                             <label> Đánh giá: </label>
@@ -138,7 +139,7 @@
                                     <div class="mt-2 multi-nut">
                                         <a href="#" class="btn-sua btn btn-outline-info mr-2">Sửa <i class="nav-icon fas fa-edit"></i></a>
                                         <a href="#" class="btn-luu btn btn-outline-success mr-2 d-none">Lưu <i class="fas fa-check"></i></a>
-                                        <a href="<?= base_url() ?>admin/xoaThucTap/<?= $value['IdUser_SV'] ?>" class="btn-xoa btn btn-outline-danger mr-2"> Xóa <i class="nav-icon fas fa-times"></i></a>
+                                        <a href="<?= base_url() ?>admin/xoaThucTap/<?= $value['IdUser_SV'] ?>" class="btn-xoa btn btn-outline-danger mr-2" onclick="return deleteUser()"> Xóa <i class="nav-icon fas fa-times"></i></a>
                                         <a href="<?= base_url() ?>admin/quanlythuctap" class="btn btn-outline-primary btn-quaylai">Quay lại <i class="fas fa-arrow-right"></i></a>
                                     </div>
                                 </form>
@@ -161,6 +162,11 @@
     <script src="<?php echo base_url(); ?>bootstrap4/js/bootstrap.js"></script>
     <script src="<?php echo base_url(); ?>bootstrap4/js/script.js"></script>
     <script>
+        // thông báo xóa tài khoản
+        function deleteUser() {
+          if (confirm("Bạn có chắc muốn xóa thông tin thực tập này?")) {return true;} else {return false;}
+        }
+
         $(document).ready(function() {
             var duongdan = '<?php echo base_url(); ?>';
 
@@ -194,25 +200,32 @@
                 var ThoiGianKetThuc = $(this).parent().prev().children('.nkt').children('.ThoiGianKetThuc').val();
                 var DanhGia = $(this).parent().prev().children('.danhgia').children('.DanhGia').val();
 
-                console.log(CongTy);
-                console.log(ThoiGianBatDau);
-                console.log(ThoiGianKetThuc);
-                console.log(DanhGia);
+                // cover date js
+                let current_datetime1 = new Date(ThoiGianBatDau);
+                let formatted_date1 = current_datetime1.getDate() + "-" + (current_datetime1.getMonth() + 1) + "-" + current_datetime1.getFullYear();
+
+                let current_datetime2 = new Date(ThoiGianKetThuc);
+                let formatted_date2 = current_datetime2.getDate() + "-" + (current_datetime2.getMonth() + 1) + "-" + current_datetime2.getFullYear();
+                
+
+                // console.log(CongTy);
+                // console.log(ThoiGianBatDau);
+                // console.log(ThoiGianKetThuc);
+                // console.log(DanhGia);
 
                 if (CongTy=="" || ThoiGianBatDau=="" || ThoiGianKetThuc=="" || DanhGia=="") {
                     alert('Bạn chưa nhập đầy đủ thông tin. Vui lòng kiểm tra lại!');
                 } 
                 else {
-
-                    //Gán giá trị nội dung sau khi lưu
-                    $(this).parent().prev().children('.nbd').children('.ThoiGianBatDau').val(ThoiGianBatDau);
-                    $(this).parent().prev().children('.nkt').children('.ThoiGianKetThuc').val(ThoiGianKetThuc);
-
                     $('input.andi').removeAttr('readonly');
                     $(this).addClass('d-none');
                     $('input.andi').removeClass('show');
                     $('.btn-sua').removeClass('d-none');
                     $('.ThoiGianBatDau, .ThoiGianKetThuc').attr('type', 'text');
+
+                    //Gán giá trị nội dung sau khi lưu
+                    $(this).parent().prev().children('.nbd').children('.ThoiGianBatDau').val(formatted_date1);
+                    $(this).parent().prev().children('.nkt').children('.ThoiGianKetThuc').val(formatted_date2);
 
                     $.ajax({
                         url: duongdan + 'admin/updateThucTap',

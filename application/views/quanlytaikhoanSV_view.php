@@ -129,10 +129,10 @@
                                             </div>
                                             <div class="mt-2 multi-nut">
                                                 <div class="row">
-                                                    <div class="col-sm-6 col-12"><a href="<?= base_url() ?>admin/datLaiMatKhau_SV/<?= $value['IdUser'] ?>" class="btn-dlmk btn btn-outline-info mr-2">Đặt lại mật khẩu <i class="nav-icon fas fa-random "></i></a></div>
+                                                    <div class="col-sm-6 col-12"><a href="<?= base_url() ?>admin/datLaiMatKhau_SV/<?= $value['IdUser'] ?>" class="btn-dlmk btn btn-outline-info mr-2" onclick="return resetPassword()">Đặt lại mật khẩu <i class="nav-icon fas fa-random "></i></a></div>
                                                     <div class="col-sm-6 col-12">
                                                         <div class="row">
-                                                            <div class="col-sm-5 p-0"><a href="<?= base_url() ?>admin/deleteUserSV/<?= $value['IdUser'] ?>" class="btn-xoa btn btn-outline-danger mr-2"> Xóa <i class="nav-icon fas fa-times"></i></a></div>
+                                                            <div class="col-sm-5 p-0"><a href="<?= base_url() ?>admin/deleteUserSV/<?= $value['IdUser'] ?>" class="btn-xoa btn btn-outline-danger mr-2" onclick="return deleteUser()"> Xóa <i class="nav-icon fas fa-times"></i></a></div>
                                                             <div class="col-sm-7 p-0"><a href="<?= base_url() ?>admin/quanlytaikhoanSV" class="btn btn-outline-primary btn-quaylai">Quay lại <i class="fas fa-arrow-right"></i></a></div>
                                                         </div>
                                                     </div>
@@ -159,6 +159,16 @@
     <script src="<?php echo base_url(); ?>bootstrap4/js/bootstrap.js"></script>
     <script src="<?php echo base_url(); ?>bootstrap4/js/script.js"></script>
     <script>
+        // thông báo khi đặt lại password
+        function resetPassword() {
+          if (confirm("Reset password sẽ đổi thành Mã sinh viên. Bạn có muốn tiếp tục?")) {return true;} else {return false;}
+        }
+
+        // thông báo xóa tài khoản
+        function deleteUser() {
+          if (confirm("Bạn có chắc muốn xóa tài khoản này?")) {return true;} else {return false;}
+        }
+        
         $(document).ready(function() {
             //xử lý ẩn hiện pass
             $('.hide').click(function(event) {
@@ -172,20 +182,6 @@
 
                 $('.Password').attr('type', 'text');
             });
-
-            // $('.option-tenkhoa').change(function(event) {
-            //     var MaK = $(this).val();
-
-            //     $.ajax({
-            //         url: duongdan + 'admin/locLop',
-            //         type: 'POST',
-            //         dataType: 'html',
-            //         data: {MaK: MaK},
-            //         success:function(data){
-            //             $('.option-tenlop').html(data);
-            //         }
-            //     });
-            // });
 
             // xứ lý ẩn hiện nội dung khi click
             $('.table tbody tr').click(function(event) {

@@ -27,18 +27,18 @@
         <div class="content-wrapper" style="min-height: 221px;">
             <div class="container-fluid">
                 <div class="danhsach">
-                    <div class="alert alert-success text-center"><h4>Thêm tài khoản</h4></div>
+                    <div class="alert alert-success text-center"><h4>Thêm tài khoản sinh viên</h4></div>
                 </div>
             </div>
             <div class="container-fluid select-option">
-                <form action="<?= base_url(); ?>admin/addUserSV" method="post" enctype="multipart/form-data"><!-- để form ở đây -->
+                <form action="<?= base_url(); ?>admin/addUserSV" method="post" enctype="multipart/form-data" name="myForm" onsubmit="return validateForm()"><!-- để form ở đây -->
                     <div class="select-option row">
                         <div class="col-sm-6"><a href="#" class="btn btn-dark btn-block btn-lg creOneUser">Tạo từng tài khoản</a></div>
                         <div class="col-sm-6"><a href="#" class="btn btn-dark  btn-block btn-lg creMultiUser">Tạo nhiều tài khoản</a></div>
                     </div>
                     <div class="type-addbox mb-5">
                         <h2 class="title">Tạo từng tài khoản</h2>
-                        <div class="radio-button">
+                        <!-- <div class="radio-button">
                             <div class="radio-button--option optionSV">
                                 <input type="radio" name="user-type" id="sv" value="0" checked>
                                 <label for="sv"> Sinh viên</label>
@@ -47,7 +47,7 @@
                                 <input type="radio" name="user-type" id="gv" value="1">
                                 <label for="gv">Giảng Viên</label>
                             </div>
-                        </div>
+                        </div> -->
 
                         <!-- Tạo từng tài khoản------------------------------------------------------------------------------------------- -->
                         <div class="user--one">
@@ -55,7 +55,7 @@
                             <div class="form-data form-sv">
                                 <div class="MSV input-form">
                                     <label> Username/Mã sinh viên: </label>
-                                    <input name="msv" type="text" value="" class="msv show">
+                                    <input name="msv" type="text" value="" class="msv show" required>
                                 </div>
                                 <div class="PASS_SV input-form">
                                     <label> Password (Mặc định): </label>
@@ -63,88 +63,43 @@
                                 </div>
                                 <div class="TENSV input-form">
                                     <label> Tên sinh viên: </label>
-                                    <input name="tensv" type="text" value="" class="tensv show">
+                                    <input name="tensv" type="text" value="" class="tensv show" required>
                                 </div>
                                 <div class="NAMSINH input-form">
                                     <label> Ngày sinh: </label>
-                                    <input name="namsinh" type="text" value="" class="namsinh show" placeholder="dd/mm/YYYY">
+                                    <input name="namsinh" type="text" value="" class="namsinh show" placeholder="dd/mm/YYYY" required>
                                 </div>
-                                <div class="TENKHOA1 input-form">
+                                <div class="TENKHOA input-form">
                                     <label> Khoa: </label>
-                                    <select class="option-tenkhoa" id="option-tenkhoa">
-                                        <option value="" selected>--Chọn Khoa--</option>
-                                        <option value="" selected>--Chọn Khoa--</option>
-                                        <option value="" selected>--Chọn Khoa--</option>
-                                        <option value="" selected>--Chọn Khoa--</option>
+                                    <select class="option-tenkhoa" name="option-tenkhoa" required>
+                                        <option value="" selected >--Chọn Khoa--</option>
+                                        <?php foreach ($tenkhoa as $value): ?>
+                                            <option value="<?= $value['MaK'] ?>"><?= $value['TenK'] ?></option>
+                                        <?php endforeach ?>
                                     </select>  
                                 </div>  
                                 <div class="TENLOP input-form">
                                     <label> Lớp: </label>
-                                    <select class="option-tenlop">
-                                        <option value="" selected>58th4</option>
-                                        <option value="" selected>58th4</option>
-                                        <option value="" selected>58th4</option>
-                                        <option value="" selected>58th4</option>
+                                    <select class="option-tenlop" name="option-tenlop">
                                     </select>  
                                 </div>
                                 <div class="KHOA input-form">
                                     <label> Khóa: </label>
-                                    <input name="khoa" type="text" value="" class="khoa show">
+                                    <input name="khoa" type="text" value="" class="khoa show" required>
                                 </div>
                                 <div class="DTB input-form">
                                     <label> Điểm trung bình: </label>
-                                    <input name="dtb" type="text" value="" class="dtb show">
+                                    <input name="dtb" type="text" value="" class="dtb show" required>
                                 </div>
                                 <div class="GMAIL_SV input-form">
                                     <label> Email: </label>
-                                    <input name="gmail_sv" type="email" value="" class="gmail_sv show">
+                                    <input name="gmail_sv" type="email" value="" class="gmail_sv show" required>
                                 </div>
                                 <div class="ANH_SV input-form">
                                     <label> Ảnh: </label>
                                     <input name="anh_sv" type="file" value="" class="anh_sv show">
                                 </div>
                             </div>
-
-                            <!-- Form giảng viên------------------------------------------------------------------------------------------ -->
-                            <!-- <div class="form-data form-gv d-none">
-                                <div class="MGV input-form">
-                                    <label> Username/Mã giảng viên: </label>
-                                    <input name="mgv" type="text" value="" class="mgv show">
-                                </div>
-                                <div class="PASS_GV input-form">
-                                    <label> Password (Mặc định): </label>
-                                    <input name="pass_gv" type="text" value="daihocthuyloi" class="pass_gv show" readonly>
-                                </div>
-                                <div class="TENGV input-form">
-                                    <label> Tên giảng viên: </label>
-                                    <input name="tengv" type="text" value="" class="tengv show">
-                                </div>
-                                <div class="TENKHOA2 input-form">
-                                    <label> Khoa: </label>
-                                    <select class="option-tenkhoa" id="option-tenkhoa">
-                                        <option value="" selected>--Chọn Khoa--</option>
-                                        <option value="" selected>--Chọn Khoa--</option>
-                                        <option value="" selected>--Chọn Khoa--</option>
-                                        <option value="" selected>--Chọn Khoa--</option>
-                                    </select>  
-                                </div>
-                                <div class="CHUYENMON input-form">
-                                    <label> Chuyên môn: </label>
-                                    <input name="chuyenmon" type="text" value="" class="chuyenmon show">
-                                </div>
-                                <div class="SDT input-form">
-                                    <label> Số điện thoại: </label>
-                                    <input name="sdt" type="text" value="" class="sdt show">
-                                </div>
-                                <div class="GMAIL_GV input-form">
-                                    <label> Email: </label>
-                                    <input name="gmail_gv" type="email" value="" class="gmail_gv show">
-                                </div>
-                                <div class="ANH_GV input-form">
-                                    <label> Ảnh: </label>
-                                    <input name="anh_gv" type="file" value="" class="anh_gv show">
-                                </div>
-                            </div> -->
                         </div>
 
 
@@ -178,7 +133,36 @@
     <script src="<?php echo base_url(); ?>bootstrap4/js/bootstrap.js"></script>
     <script src="<?php echo base_url(); ?>bootstrap4/js/script.js"></script>
     <script>
+        // function isDate(inputDate) {
+        //     var regex = /^(0?[1-9]|[12][0-9]|3[01])[/](0?[1-9]|1[012])[/](19|20)?[0-9]{2}$/;
+        //     return regex.test(inputDate);
+        // }
+
+        // function validateForm() {
+        //     var date = $('.namsinh').val();
+        //     if (!isDate(date)) {
+        //         alert("Bạn chưa nhập đúng định dạng ngày tháng năm sinh!");
+        //         return false;
+        //     }
+        // }
+
         $(document).ready(function() {
+            var duongdan = '<?php echo base_url(); ?>';
+
+            // xử lý khi chọn khoa sẽ hiện ra lớp tương ứng
+            $('.option-tenkhoa').change(function(event) {
+                var MaK = $(this).val();
+
+                $.ajax({
+                    url: duongdan + 'admin/locLop',
+                    type: 'POST',
+                    dataType: 'html',
+                    data: {MaK: MaK},
+                    success:function(data){
+                        $('.option-tenlop').html(data);
+                    }
+                });
+            });
 
             // Lựa chọn tài khoản sv và gv
             $('.optionSV').click(function(event) {

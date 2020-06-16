@@ -208,15 +208,9 @@ class Admin extends CI_Controller {
 		// $Anh = $this->input->post('anh_gv');
 		$Anh = 'chua co';
 
-
-
-
-		// if ($this->admin_model->insertUser($Username,$Password,$Role)) {
-		// 	echo 'thanh cong';	
-		// }
-		// else {
-		// 	echo 'that bai';
-		// }
+		// if ($Username=="" || $Password=="" || $TenGV=="" || $MaK=="" || $Chuyenmon=="" || $SDT=="" || $Gmail=="") {
+  //       } 
+  //       else {
 
 		$this->admin_model->insertUser($Username,$Password,$Role);
 		$data = $this->admin_model->getMaxIdUser();
@@ -225,7 +219,7 @@ class Admin extends CI_Controller {
 			$this->load->view('themGV');
 		}
 
-
+        // }
 		// echo "<pre>";
 		// var_dump($Username);
 		// var_dump($Password);
@@ -242,7 +236,38 @@ class Admin extends CI_Controller {
 	}
 	public function adduserSV()
 	{
-		// $this->load->view('themtaikhoanSV_view');
+		$Username = $this->input->post('msv');
+		$Password = $this->input->post('pass_sv');
+		$Role = '0';
+		$TenSV = $this->input->post('tensv');
+		$NamSinh = $this->input->post('namsinh');
+		$MaL = $this->input->post('option-tenlop');
+		// $MaK = $this->input->post('option-tenkhoa');
+		$Khoa = $this->input->post('khoa');
+		$DiemTB = $this->input->post('dtb');
+		$Gmail = $this->input->post('gmail_sv');
+		// $Anh = $this->input->post('anh_gv');
+		$Anh = 'chua co';
+
+		// echo "<pre>";
+		// var_dump($Username);
+		// var_dump($Password);
+		// var_dump($Role);
+		// var_dump($TenSV);
+		// var_dump($NamSinh);
+		// var_dump($MaL);
+		// var_dump($Khoa);
+		// var_dump($DiemTB);
+		// var_dump($Anh);
+		// var_dump($Gmail);
+		// echo "</pre>";
+
+		// $this->admin_model->insertUser($Username,$Password,$Role);
+		// $data = $this->admin_model->getMaxIdUser();
+		// $IdUser = $data[0]['IdUser'];
+		// if ($this->admin_model->insertSV($TenSV,$IdUser,$Anh,$MaL,$Khoa,$DiemTB,$NamSinh,$Gmail)) {
+		// 	$this->load->view('themSV');
+		// }
 	}
 	public function themtaikhoanGV()
 	{
@@ -254,7 +279,11 @@ class Admin extends CI_Controller {
 	}
 	public function themtaikhoanSV()
 	{
-		$this->load->view('themtaikhoanSV_view');
+		$tenkhoa = $this->admin_model->getAllKhoa();
+		$data = [
+		    'tenkhoa' => $tenkhoa
+		];
+		$this->load->view('themtaikhoanSV_view', $data, false);
 	}
 }
 

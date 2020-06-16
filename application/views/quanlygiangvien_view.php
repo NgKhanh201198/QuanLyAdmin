@@ -28,7 +28,7 @@
         <div class="content-wrapper" style="min-height: 221px;">
             <div class="container-fluid">
                 <div class="danhsach">
-                    <div class="alert alert-success text-center"><h4>Danh sách tài khoản giảng viên</h4></div>
+                    <div class="alert alert-success text-center"><h4>Danh sách cán bộ giảng viên</h4></div>
                 </div>
             </div>
             <div class="container-fluid select-option">
@@ -135,7 +135,7 @@
                                         <a href="#" id="repairBtn" class="btn-sua btn btn-outline-info mr-2">Sửa <i class="nav-icon fas fa-edit"></i></a>
                                         <a href="#" id="repairBtn" class="btn-luu btn btn-outline-success mr-2 d-none">Lưu <i class="fas fa-check"></i></a>
 
-                                        <a href="<?= base_url() ?>admin/xoagiangvien/<?= $value['IdUser'] ?>" id="deleteBtn" class="btn-xoa btn btn-outline-danger mr-2"> Xóa <i class="nav-icon fas fa-times"></i></a>
+                                        <a href="<?= base_url() ?>admin/xoagiangvien/<?= $value['IdUser'] ?>" id="deleteBtn" class="btn-xoa btn btn-outline-danger mr-2" onclick="return deleteUser()"> Xóa <i class="nav-icon fas fa-times"></i></a>
                                         <a href="<?= base_url() ?>admin/quanlygiangvien" class="btn btn-outline-primary btn-quaylai">Quay lại <i class="fas fa-arrow-right"></i></a>
                                     </div>
                                 </form>
@@ -157,22 +157,13 @@
     <!-- bootstrap js -->
     <script src="<?php echo base_url(); ?>bootstrap4/js/bootstrap.js"></script>
     <script>
+        // thông báo xóa tài khoản
+        function deleteUser() {
+          if (confirm("Bạn có chắc muốn xóa giảng viên này?")) {return true;} else {return false;}
+        }
+
         $(document).ready(function() {
             var duongdan = '<?php echo base_url(); ?>';
-
-            // $('.option-tenkhoa').change(function(event) {
-            //     var MaK = $(this).val();
-
-            //     $.ajax({
-            //         url: duongdan + 'admin/locLop',
-            //         type: 'POST',
-            //         dataType: 'html',
-            //         data: {MaK: MaK},
-            //         success:function(data){
-            //             $('.option-tenlop').html(data);
-            //         }
-            //     });
-            // });
 
             // xứ lý ẩn hiện nội dung khi click
             $('.table tbody tr').click(function(event) {

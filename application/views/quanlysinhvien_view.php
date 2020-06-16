@@ -28,7 +28,7 @@
         <div class="content-wrapper" style="min-height: 221px;">
             <div class="container-fluid">
                 <div class="danhsach">
-                    <div class="alert alert-success text-center"><h4>Danh sách tài khoản sinh viên</h4></div>
+                    <div class="alert alert-success text-center"><h4>Danh sách sinh viên</h4></div>
                 </div>
             </div>
             <div class="container-fluid select-option">
@@ -125,12 +125,12 @@
                                                 <input name="TenKhoa" type="text" value="<?= $value['TenK'] ?>" class="TenKhoa andi" readonly>
                                             </div>
                                             <select class="option-tenkhoa d-none" id="option-tenkhoa">
-                                                        <option value="" selected>--Chọn Khoa--</option>
+                                                <option value="" selected>--Chọn Khoa--</option>
                                                 <?php foreach ($tbl_khoa as $value1): ?>
                                                     <?php if ($value['MaK'] == $value1['MaK']): ?>
-                                                        <option value="<?= $value1['MaK'] ?>"><?= $value1['TenK'] ?></option>
+                                                    <option value="<?= $value1['MaK'] ?>"><?= $value1['TenK'] ?></option>
                                                     <?php else: ?>
-                                                        <option value="<?= $value1['MaK'] ?>"><?= $value1['TenK'] ?></option>
+                                                    <option value="<?= $value1['MaK'] ?>"><?= $value1['TenK'] ?></option>
                                                     <?php endif ?>
                                                 <?php endforeach ?>
                                             </select>  
@@ -156,7 +156,7 @@
                                     <div class="mt-2 multi-nut">
                                         <a href="#" class="btn-sua btn btn-outline-info mr-2">Sửa <i class="nav-icon fas fa-edit"></i></a>
                                         <a href="#" class="btn-luu btn btn-outline-success mr-2 d-none">Lưu <i class="fas fa-check"></i></a>
-                                        <a href="<?= base_url() ?>admin/xoasinhvien/<?= $value['IdUser'] ?>" class="btn-xoa btn btn-outline-danger mr-2"> Xóa <i class="nav-icon fas fa-times"></i></a>
+                                        <a href="<?= base_url() ?>admin/xoasinhvien/<?= $value['IdUser'] ?>" class="btn-xoa btn btn-outline-danger mr-2" onclick="return deleteUser()"> Xóa <i class="nav-icon fas fa-times"></i></a>
                                         <a href="<?= base_url() ?>admin/quanlysinhvien" class="btn btn-outline-primary btn-quaylai">Quay lại <i class="fas fa-arrow-right"></i></a>
                                     </div>
                                 </form>
@@ -180,10 +180,16 @@
     <script src="<?php echo base_url(); ?>bootstrap4/js/bootstrap.js"></script>
     <script src="<?php echo base_url(); ?>bootstrap4/js/script.js"></script>
     <script>
+        // thông báo xóa tài khoản
+        function deleteUser() {
+          if (confirm("Bạn có chắc muốn xóa sinh viên này?")) {return true;} else {return false;}
+        }
+
         $(document).ready(function() {
 
             var duongdan = '<?php echo base_url(); ?>';
 
+            // xử lý khi chọn khoa sẽ hiện ra lớp tương ứng
             $('.option-tenkhoa').change(function(event) {
                 var MaK = $(this).val();
 
@@ -247,12 +253,6 @@
 
                 if (IdUser=="" || TenSV=="" || NamSinh=="" || Username=="" || Khoa=="" || MaL==null || Gmail=="") {
                     alert('Bạn chưa nhập đầy đủ thông tin!');
-                    // $('input.andi').removeAttr('readonly');
-                    // $('.btn-luu').removeClass('d-none');
-                    // $('input.andi').addClass('show');
-                    // $('btn-sua').addClass('d-none');
-                    // $('.TenKhoa, .MaL').addClass('d-none');
-                    // $('.option-tenkhoa, .option-tenlop').removeClass('d-none');
                 } 
                 else {
 
@@ -265,7 +265,7 @@
                         $(this).parent().prev().children('.tenkhoaCha').children('.append1').children().val(TenKhoa);
                         $(this).parent().prev().children('.lop').children('.append2').children().val(MaL);
 
-                        $('input.andi').removeAttr('readonly');
+                        $('input.andi').attr('readonly', '');
                         $(this).addClass('d-none');
                         $('input.andi').removeClass('show');
                         $('.btn-sua').removeClass('d-none');

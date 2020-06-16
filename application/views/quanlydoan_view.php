@@ -88,7 +88,7 @@
                                     <th scope="row"><?= $value['TenSV'] ?></th>
                                     <td><?= $value['MaL'] ?></td>
                                     <td><?= $value['TenK'] ?></td>
-                                    <td><?= $value['TrangThaiYeuCau'] ?></td>
+                                    <td class="trangthai"><?= $value['TrangThaiYeuCau'] ?></td>
                                 </tr>
                             <?php endforeach ?>
                         </tbody>
@@ -167,6 +167,8 @@
     <script src="<?php echo base_url(); ?>bootstrap4/js/script.js"></script>
     <script>
         $(document).ready(function() {
+            if ($('.table tbody tr td.trangthai').val() == '1') {console.log('co 1 cái');}
+
             var duongdan = '<?php echo base_url(); ?>';
 
             // xứ lý ẩn hiện nội dung khi click
@@ -180,96 +182,6 @@
 
                 $('.danhsach h4').text("Thông tin đồ án sinh viên");
             });
-
-            // //xử lý khi click vào nút sửa
-            // $('html,body').on('click', '.btn-sua', function(event) {
-            //     event.preventDefault();
-            //     $('input.andi').removeAttr('readonly');
-            //     $('.btn-luu').removeClass('d-none');
-            //     $('input.andi').addClass('show');
-            //     $(this).addClass('d-none');
-            //     $('.TenKhoa, .MaL').addClass('d-none');
-            //     $('.option-tenkhoa, .option-tenlop').removeClass('d-none');
-            // });
-
-            // // xử lý khi click vào nút Lưu
-            // $('.btn-luu').click(function(event) {
-            // // $('html,body').on('click', '.btn-luu', function(event) {
-            //     event.preventDefault();
-            //     var IdUser = $(this).parent().prev().children('.tensv').children('.IdUser').val();
-            //     var TenSV = $(this).parent().prev().children('.tensv').children('.TenSV').val();
-            //     var NamSinh = $(this).parent().prev().children('.ngaysinh').children('.NamSinh').val();
-            //     var Username = $(this).parent().prev().children('.msv').children('.Username').val();
-            //     var TenKhoa = $(this).parent().prev().children('.tenkhoaCha').children('.option-tenkhoa').find(':selected').text();
-            //     var Khoa = $(this).parent().prev().children().children('.Khoa').val();
-            //     var MaL = $(this).parent().prev().children('.lop').children('.option-tenlop').val();
-            //     var Gmail = $(this).parent().prev().children().children('.Gmail').val();
-
-            //     // console.log(IdUser);
-            //     // console.log(TenSV);
-            //     // console.log(NamSinh);
-            //     // console.log(Username);
-            //     // console.log(TenKhoa);
-            //     // console.log(Khoa);
-            //     // console.log(MaL);
-            //     // console.log(Gmail);
-
-                
-
-            //     if (IdUser=="" || TenSV=="" || NamSinh=="" || Username=="" || Khoa=="" || MaL==null || Gmail=="") {
-            //         alert('chua du');
-            //         // $('input.andi').removeAttr('readonly');
-            //         // $('.btn-luu').removeClass('d-none');
-            //         // $('input.andi').addClass('show');
-            //         // $('btn-sua').addClass('d-none');
-            //         // $('.TenKhoa, .MaL').addClass('d-none');
-            //         // $('.option-tenkhoa, .option-tenlop').removeClass('d-none');
-            //     } 
-            //     else {
-
-            //         //Gán giá trị nội dung sau khi lưu
-            //         $(this).parent().prev().children('.tenkhoaCha').children('.append1').children().val(TenKhoa);
-            //         $(this).parent().prev().children('.lop').children('.append2').children().val(MaL);
-
-            //         $('input.andi').removeAttr('readonly');
-            //         $(this).addClass('d-none');
-            //         $('input.andi').removeClass('show');
-            //         $('.btn-sua').removeClass('d-none');
-            //         $('.TenKhoa, .MaL').removeClass('d-none');
-            //         $('.option-tenkhoa, .option-tenlop').addClass('d-none');
-
-            //         $.ajax({
-            //             url: duongdan + 'admin/updateSV',
-            //             type: 'POST',
-            //             dataType: 'json',
-            //             data: {
-            //                 IdUser: IdUser,
-            //                 TenSV: TenSV,
-            //                 NamSinh: NamSinh,
-            //                 Username: Username,
-            //                 // MaKhoa: MaKhoa,
-            //                 Khoa: Khoa,
-            //                 MaL: MaL,
-            //                 Gmail: Gmail
-            //             },
-            //         })
-            //         .done(function() {
-            //             console.log("success");
-            //         })
-            //         .fail(function() {
-            //             // console.log("error");
-            //         })
-            //         .always(function() {
-            //         });
-
-            //         $('.thongbao').removeClass('d-none');
-
-            //         var tudong = setInterval(function() {
-            //             $('.thongbao').addClass('d-none');
-            //             clearInterval(tudong); //Dừng lặp lại sau tg cho trc
-            //         }, 2500);
-            //     }
-            // });
 
             // xử lý màu menu
             $('.qlda').addClass('addbackgroud');

@@ -1,3 +1,24 @@
+<?php 
+    // $Username = $this->input->post('mgv');
+    // $Password = $this->input->post('pass_gv');
+    // $Role = '1';
+    // $TenGV = $this->input->post('tengv');
+    // $MaK = $this->input->post('option-tenkhoa');
+    // $Chuyenmon = $this->input->post('chuyenmon');
+    // $SDT = $this->input->post('sdt');
+    // $Gmail = $this->input->post('gmail_gv');
+    // // $Anh = $this->input->post('anh_gv');
+    // $Anh = 'chua co';
+
+    // if (isset($_POST['submit'])) {
+    //     if ($Username=="" || $Password=="" || $TenGV=="" || $MaK=="" || $Chuyenmon=="" || $SDT=="" || $Gmail=="") {
+    //     echo "<script>alert('Bạn chưa điền đầy đủ thông tin');</script>";
+    //     }
+    //     else {
+    //         header('Location: http://localhost/MyJob/QuanLyDoAn/admin/addUserGV');
+    //     }
+    // }
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,11 +48,11 @@
         <div class="content-wrapper" style="min-height: 221px;">
             <div class="container-fluid">
                 <div class="danhsach">
-                    <div class="alert alert-success text-center"><h4>Thêm tài khoản</h4></div>
+                    <div class="alert alert-success text-center"><h4>Thêm tài khoản giảng viên</h4></div>
                 </div>
             </div>
             <div class="container-fluid select-option">
-                <form action="<?= base_url(); ?>admin/addUserGV" method="post" enctype="multipart/form-data"><!-- để form ở đây -->
+                <form action="addUserGV" method="post" enctype="multipart/form-data">
                     <div class="select-option row">
                         <div class="col-sm-6"><a href="#" class="btn btn-dark btn-block btn-lg creOneUser">Tạo từng tài khoản</a></div>
                         <div class="col-sm-6"><a href="#" class="btn btn-dark  btn-block btn-lg creMultiUser">Tạo nhiều tài khoản</a></div>
@@ -55,15 +76,15 @@
                             <div class="form-data form-gv">
                                 <div class="MGV input-form">
                                     <label> Username/Mã giảng viên: </label>
-                                    <input name="mgv" type="text" value="" class="mgv show">
+                                    <input name="mgv" type="text" class="mgv show" required>
                                 </div>
                                 <div class="PASS_GV input-form">
                                     <label> Password (Mặc định): </label>
-                                    <input name="pass_gv" type="text" value="daihocthuyloi" class="pass_gv show" readonly>
+                                    <input name="pass_gv" type="text" value="daihocthuyloi" class="pass_gv show" required readonly>
                                 </div>
                                 <div class="TENGV input-form">
                                     <label> Tên giảng viên: </label>
-                                    <input name="tengv" type="text" value="" class="tengv show">
+                                    <input name="tengv" type="text" class="tengv show" required>
                                 </div>
                                 <div class="TENKHOA input-form">
                                     <label> Khoa: </label>
@@ -75,24 +96,22 @@
                                 </div>
                                 <div class="CHUYENMON input-form">
                                     <label> Chuyên môn: </label>
-                                    <input name="chuyenmon" type="text" value="" class="chuyenmon show">
+                                    <input name="chuyenmon" type="text" class="chuyenmon show" required>
                                 </div>
                                 <div class="SDT input-form">
                                     <label> Số điện thoại: </label>
-                                    <input name="sdt" type="text" value="" class="sdt show">
+                                    <input name="sdt" type="text" class="sdt show" required>
                                 </div>
                                 <div class="GMAIL_GV input-form">
                                     <label> Email: </label>
-                                    <input name="gmail_gv" type="email" value="" class="gmail_gv show">
+                                    <input name="gmail_gv" type="email" class="gmail_gv show" required>
                                 </div>
                                 <div class="ANH_GV input-form">
-                                    <label> Ảnh (Không hỗ trợ tải ảnhs): </label>
-                                    <input name="anh_gv" type="file" value="" class="anh_gv show">
+                                    <label> Ảnh (Không hỗ trợ tải ảnh): </label>
+                                    <input name="anh_gv" type="file" class="anh_gv show">
                                 </div>
                             </div>
                         </div>
-
-
                         <!-- Tạo nhiều tài khoản------------------------------------------------------------------------------------------ -->
                         <div class="user--multi d-none">
                             <div class="multiple-user">
@@ -102,13 +121,12 @@
                                 <input name="Gmail" type="file" value="" class="Gmail show">
                             </div>
                         </div>
-
                         <!-- Nút thêm mới -------------------------------------------------------------------------------------------- -->
                         <div class="text-center form__btn p-3">
-                            <button type="submit" class="btn btn-outline-success themmoi" style="padding: 6px 20px">Thêm mới <i class="fas fa-plus"></i></button>
+                            <button type="submit" name="submit" class="btn btn-outline-success themmoi" style="padding: 6px 20px">Thêm mới <i class="fas fa-plus"></i></button>
                         </div>
                     </div>
-                </form><!-- End form -->
+                </form>
             </div>
         </div>
         <!-- /.content-wrapper -->
@@ -124,18 +142,6 @@
     <script src="<?php echo base_url(); ?>bootstrap4/js/script.js"></script>
     <script>
         $(document).ready(function() {
-            // $('.themmoi').click(function(event) {
-            //     /* Act on the event */
-
-            //     console.log($('.mgv').val());
-            //     console.log(TenSV);
-            //     console.log(NamSinh);
-            //     console.log(Username);
-            //     console.log(TenKhoa);
-            //     console.log(Khoa);
-            //     console.log(MaL);
-            //     console.log(Gmail);
-            // });
 
             // Lựa chọn tài khoản sv và gv
             $('.optionSV').click(function(event) {

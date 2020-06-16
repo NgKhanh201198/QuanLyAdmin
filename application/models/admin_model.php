@@ -238,9 +238,19 @@ class admin_model extends CI_Model {
 		];
 		return $this->db->insert('giangvien', $data);
 	}
-	public function insertSV()
+	public function insertSV($TenSV,$IdUser,$Anh,$MaL,$Khoa,$DiemTB,$NamSinh,$Gmail)
 	{
-		
+		$data = [
+		    'TenSV' => $TenSV,
+		    'IdUser' => $IdUser,
+		    'Anh' => $Anh,
+		    'MaL' => $MaL,
+		    'Khoa' => $Khoa,
+		    'DiemTB' => $DiemTB,
+		    'NamSinh' => $NamSinh,
+		    'Gmail' => $Gmail
+		];
+		return $this->db->insert('sinhvien', $data);
 	}
 }
 
