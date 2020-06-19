@@ -1,2 +1,0 @@
-# QuanLyDoAn
-Bài tập lớn

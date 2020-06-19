@@ -19,6 +19,12 @@
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
+
+    <?php if ($this->session->has_userdata('Username') && $this->session->has_userdata('Password')): ?>
+    <?php else: ?>
+        <?php redirect(base_url('admin/login')); ?>
+    <?php endif ?>
+
     <div class="wrapper">
         <!-- Navbar -->
         <?php include('header.php'); ?>
@@ -258,8 +264,8 @@
             });
 
             // xử lý màu menu
-            $('.qlda').addClass('addbackgroud');
-            $('.qlda').addClass('menu-open');
+            $('.qltt').addClass('addbackgroud');
+            $('.qltt').addClass('menu-open');
             $('.tttt').addClass('addbackgroudCon');            
             $('.doan').addClass('removebackgroud');
 

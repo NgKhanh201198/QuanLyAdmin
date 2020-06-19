@@ -19,14 +19,23 @@ class admin_model extends CI_Model {
 		$this->db->where('IdUser_SV', $id_SV);
 		return $this->db->delete('thuctap');
 	}
+	public function getUserAdmin()
+	{
+		$this->db->select('*');
+		$this->db->where('Quyen', 2);
+		$data = $this->db->get('user');
+		$data = $data->result_array();
+		return $data;
+	}
 
 	// Quản lý Sinh viên---------------------------------------------------------------------------------------------------------------
 	public function getSinhVien_User_Lop_Khoa()
 	{	
-		$this->db->select('sinhvien.*, user.*,lop.*, khoa.*');
+		$this->db->select('sinhvien.*, user.*,lop.*, chuyennganh.*, khoa.*');
 		$this->db->join('user', 'user.IdUser = sinhvien.IdUser', 'left');
 		$this->db->join('lop', 'lop.MaL = sinhvien.MaL', 'left');
-		$this->db->join('khoa', 'khoa.MaK = lop.MaK', 'left');
+		$this->db->join('chuyennganh', 'chuyennganh.MaCN = lop.MaCN', 'left');
+		$this->db->join('khoa', 'khoa.MaK = chuyennganh.MaK', 'left');
 		// $data  = $this->db->get('sinhvien');
 		$data = $this->db->get('sinhvien');
 		$data = $data->result_array();
@@ -35,15 +44,15 @@ class admin_model extends CI_Model {
 		// echo "</pre>";
 		return $data;
 	}
-	public function updateSvByID($IdUser,$TenSV,$NamSinh,$Khoa,$MaL,$Gmail)
+	public function updateSvByID($IdUser,$TenSV,$NamSinh,$DiemTB,$MaL,$Email)
 	{
 		$data = [
 		    'TenSV' => $TenSV,
 		    'NamSinh' => $NamSinh,
 		    // 'Username' => $Username,
-		    'Khoa' => $Khoa,
+		    'DiemTB' => $DiemTB,
 		    'MaL' => $MaL,
-		    'Gmail' => $Gmail
+		    'Email' => $Email
 		];
 		$this->db->where('IdUser', $IdUser);
 		return $this->db->update('sinhvien', $data);
@@ -67,11 +76,33 @@ class admin_model extends CI_Model {
 		// echo "</pre>";
 		return $data;
 	}
-	public function getAllLopByTenK($MaK)
+	public function getAllLopByTenCN($MaCN)
+	{	
+		$this->db->select('*');
+		$this->db->where('MaCN', $MaCN);
+		$data = $this->db->get('Lop');
+		$data = $data->result_array();
+		// echo "<pre>";
+		// var_dump($data);
+		// echo "</pre>";
+		return $data;
+	}
+	public function getAllChuyenNghanhByTenK($MaK)
 	{	
 		$this->db->select('*');
 		$this->db->where('MaK', $MaK);
-		$data = $this->db->get('Lop');
+		$data = $this->db->get('chuyennganh');
+		$data = $data->result_array();
+		// echo "<pre>";
+		// var_dump($data);
+		// echo "</pre>";
+		return $data;
+	}
+	public function getAllBoMonByTenK($MaK)
+	{	
+		$this->db->select('*');
+		$this->db->where('MaK', $MaK);
+		$data = $this->db->get('bomon');
 		$data = $data->result_array();
 		// echo "<pre>";
 		// var_dump($data);
@@ -89,22 +120,24 @@ class admin_model extends CI_Model {
 	{
 		$this->db->select('*');
 		$this->db->join('user', 'user.IdUser = giangvien.IdUser', 'left');
-		$this->db->join('khoa', 'khoa.MaK = giangvien.MaK', 'left');
-		$data = $this->db->get('giangvien');
+		$this->db->join('bomon', 'bomon.MaBoMon = giangvien.MaBoMon', 'left');
+		$this->db->join('khoa', 'khoa.MaK = bomon.MaK', 'left');
+		$data = $this->db->get('giangvien',10,0);
 		$data = $data->result_array();
 		// echo "<pre>";
 		// var_dump($data);
 		// echo "</pre>";
 		return $data;
 	}
-	public function updateGvByID($IdUser,$TenGV,$MaK,$Chuyenmon,$SDT,$Gmail)
+	public function updateGvByID($IdUser,$TenGV,$MaBoMon,$Trinhdohocvan,$SDT,$Email, $HuongNghienCuu)
 	{
 		$data = [
 		    'TenGV' => $TenGV,
-		    'MaK' => $MaK,
-		    'Chuyenmon' => $Chuyenmon,
+		    'MaBoMon' => $MaBoMon,
+		    'Trinhdohocvan' => $Trinhdohocvan,
+		    'HuongNghienCuu' => $HuongNghienCuu,
 		    'SDT' => $SDT,
-		    'Gmail' => $Gmail
+		    'Email' => $Email
 		];
 		$this->db->where('IdUser', $IdUser);
 		return $this->db->update('giangvien', $data);
@@ -121,9 +154,10 @@ class admin_model extends CI_Model {
 		$this->db->select('*');
 		$this->db->join('sinhvien', 'sinhvien.IdUser = doan.IdUser_SV', 'left');
 		$this->db->join('lop', 'lop.MaL = sinhvien.MaL', 'left');
-		$this->db->join('khoa', 'khoa.MaK = lop.MaK', 'left');
+		$this->db->join('chuyennganh', 'chuyennganh.MaCN = lop.MaCN', 'left');
+		$this->db->join('khoa', 'khoa.MaK = chuyennganh.MaK', 'left');
 		$this->db->join('giangvien', 'giangvien.IdUser = doan.IdUser_GV', 'left');
-		$this->db->join('thuctap', 'thuctap.IdUser_SV = sinhvien.IdUser', 'left');
+		// $this->db->join('thuctap', 'thuctap.IdUser_SV = sinhvien.IdUser', 'left');
 		$data = $this->db->get('doan');
 		$data = $data->result_array();
 		// echo "<pre>";
@@ -138,7 +172,8 @@ class admin_model extends CI_Model {
 		$this->db->select('*');
 		$this->db->join('sinhvien', 'sinhvien.IdUser = thuctap.IdUser_SV', 'left');
 		$this->db->join('lop', 'lop.MaL = sinhvien.MaL', 'left');
-		$this->db->join('khoa', 'khoa.MaK = lop.MaK', 'left');
+		$this->db->join('chuyennganh', 'chuyennganh.MaCN = lop.MaCN', 'left');
+		$this->db->join('khoa', 'khoa.MaK = chuyennganh.MaK', 'left');
 		$this->db->join('user', 'user.IdUser = sinhvien.IdUser', 'left');
 		$data = $this->db->get('thuctap');
 		$data = $data->result_array();
@@ -166,13 +201,20 @@ class admin_model extends CI_Model {
 	}
 
 	// Quản lý tài khoản---------------------------------------------------------------------------------------------------------------
+	public function getUser($id, $code)
+	{
+		$this->db->where('IdUser', $id);
+		$this->db->where('Username', $code);
+		$this->db->select('field1, field2');
+	}
 	public function getUser_SV()
 	{
 		$this->db->select('*');
-		$this->db->where('Role', '0');
+		$this->db->where('Quyen', '0');
 		$this->db->join('sinhvien', 'sinhvien.IdUser = user.IdUser', 'left');
 		$this->db->join('lop', 'lop.MaL = sinhvien.MaL', 'left');
-		$this->db->join('khoa', 'khoa.MaK = lop.MaK', 'left');
+		$this->db->join('chuyennganh', 'chuyennganh.MaCN = lop.MaCN', 'left');
+		$this->db->join('khoa', 'khoa.MaK = chuyennganh.MaK', 'left');
 		$data = $this->db->get('user');
 		$data = $data->result_array();
 		// echo "<pre>";
@@ -183,9 +225,10 @@ class admin_model extends CI_Model {
 	public function getUser_GV()
 	{
 		$this->db->select('*');
-		$this->db->where('Role', '1');
+		$this->db->where('Quyen', '1');
 		$this->db->join('giangvien', 'giangvien.IdUser = user.IdUser', 'left');
-		$this->db->join('khoa', 'khoa.MaK = giangvien.MaK', 'left');
+		$this->db->join('bomon', 'bomon.MaBoMon = giangvien.MaBoMon', 'left');
+		$this->db->join('khoa', 'khoa.MaK = bomon.MaK', 'left');
 		$data = $this->db->get('user');
 		$data = $data->result_array();
 		// echo "<pre>";
@@ -201,11 +244,16 @@ class admin_model extends CI_Model {
 	public function refreshPassword($id)
 	{
 		$this->db->where('IdUser', $id);
-		$data = [
-		    'Password' => 'dhtl1959'
-		    // 'Password' => '12345'
+		$this->db->select('Username');
+		$data = $this->db->get('user');
+		$data = $data->result_array();
+
+		$newpass = [
+		    'Password' => $data[0]['Username']
 		];
-		return $this->db->update('user', $data);
+		// var_dump($newpass);
+		$this->db->where('IdUser', $id);
+		return $this->db->update('user', $newpass);
 	}
 
 	// Thêm tài khoản--------------------------------------------------------------------------
@@ -214,7 +262,7 @@ class admin_model extends CI_Model {
 		$data = [
 		    'Username' => $Username,
 		    'Password' => $Password,
-		    'Role' => $Role		
+		    'Quyen' => $Role		
 		];
 		return $this->db->insert('user', $data);
 	}
@@ -225,30 +273,29 @@ class admin_model extends CI_Model {
 		$data = $data->result_array();
 		return $data;
 	}
-	public function insertGV($TenGV,$IdUser,$Anh,$MaK,$SDT,$Gmail,$Chuyenmon)
+	public function insertGV($TenGV,$IdUser,$MaBoMon,$Trinhdohocvan,$SDT,$Email,$HuongNghienCuu)
 	{
 		$data = [
 		    'TenGV' => $TenGV,
 		    'IdUser' => $IdUser,
-		    'Anh' => $Anh,
-		    'MaK' => $MaK,
+		    'MaBoMon' => $MaBoMon,
+		    'Trinhdohocvan' => $Trinhdohocvan,
 		    'SDT' => $SDT,
-		    'Gmail' => $Gmail,
-		    'Chuyenmon' => $Chuyenmon
+		    'Email' => $Email,
+		    'HuongNghienCuu' => $HuongNghienCuu
 		];
 		return $this->db->insert('giangvien', $data);
 	}
-	public function insertSV($TenSV,$IdUser,$Anh,$MaL,$Khoa,$DiemTB,$NamSinh,$Gmail)
+	public function insertSV($TenSV,$IdUser,$MaL,$DiemTB,$NamSinh,$Email)
 	{
 		$data = [
 		    'TenSV' => $TenSV,
 		    'IdUser' => $IdUser,
-		    'Anh' => $Anh,
 		    'MaL' => $MaL,
-		    'Khoa' => $Khoa,
+		    'DiemTB' => $DiemTB,
 		    'DiemTB' => $DiemTB,
 		    'NamSinh' => $NamSinh,
-		    'Gmail' => $Gmail
+		    'Email' => $Email
 		];
 		return $this->db->insert('sinhvien', $data);
 	}

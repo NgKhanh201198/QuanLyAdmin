@@ -19,6 +19,12 @@
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
+
+    <?php if ($this->session->has_userdata('Username') && $this->session->has_userdata('Password')): ?>
+    <?php else: ?>
+        <?php redirect(base_url('admin/login')); ?>
+    <?php endif ?>
+
     <div class="wrapper">
         <!-- Navbar -->
         <?php include('header.php'); ?>
@@ -58,8 +64,8 @@
                                     <input name="msv" type="text" value="" class="msv show" required>
                                 </div>
                                 <div class="PASS_SV input-form">
-                                    <label> Password (Mặc định): </label>
-                                    <input name="pass_sv" type="text" value="daihocthuyloi" class="pass_sv show" readonly>
+                                    <label> Password (Mặc định là mã sinh viên): </label>
+                                    <!-- <input name="pass_sv" type="text" value="daihocthuyloi" class="pass_sv show" readonly> -->
                                 </div>
                                 <div class="TENSV input-form">
                                     <label> Tên sinh viên: </label>
@@ -67,7 +73,7 @@
                                 </div>
                                 <div class="NAMSINH input-form">
                                     <label> Ngày sinh: </label>
-                                    <input name="namsinh" type="text" value="" class="namsinh show" placeholder="dd/mm/YYYY" required>
+                                    <input name="namsinh" type="date" value="" class="namsinh show" required>
                                 </div>
                                 <div class="TENKHOA input-form">
                                     <label> Khoa: </label>
@@ -78,14 +84,15 @@
                                         <?php endforeach ?>
                                     </select>  
                                 </div>  
-                                <div class="TENLOP input-form">
-                                    <label> Lớp: </label>
-                                    <select class="option-tenlop" name="option-tenlop">
+                                <div class="tencn input-form">
+                                    <label> Chuyên nghành: </label>
+                                    <select class="option-tencn" name="option-tencn" required>
                                     </select>  
                                 </div>
-                                <div class="KHOA input-form">
-                                    <label> Khóa: </label>
-                                    <input name="khoa" type="text" value="" class="khoa show" required>
+                                <div class="TENLOP input-form">
+                                    <label> Lớp: </label>
+                                    <select class="option-tenlop" name="option-tenlop" required>
+                                    </select>
                                 </div>
                                 <div class="DTB input-form">
                                     <label> Điểm trung bình: </label>
@@ -94,10 +101,6 @@
                                 <div class="GMAIL_SV input-form">
                                     <label> Email: </label>
                                     <input name="gmail_sv" type="email" value="" class="gmail_sv show" required>
-                                </div>
-                                <div class="ANH_SV input-form">
-                                    <label> Ảnh: </label>
-                                    <input name="anh_sv" type="file" value="" class="anh_sv show">
                                 </div>
                             </div>
                         </div>
@@ -149,15 +152,30 @@
         $(document).ready(function() {
             var duongdan = '<?php echo base_url(); ?>';
 
-            // xử lý khi chọn khoa sẽ hiện ra lớp tương ứng
+            // xử lý khi chọn khoa sẽ hiện ra chuyên nghành tương ứng
             $('.option-tenkhoa').change(function(event) {
                 var MaK = $(this).val();
+
+                $.ajax({
+                    url: duongdan + 'admin/locChuyenNganh',
+                    type: 'POST',
+                    dataType: 'html',
+                    data: {MaK: MaK},
+                    success:function(data){
+                        $('.option-tencn').html(data);
+                    }
+                });
+            });
+
+            // xử lý khi chọn chuyên nghành sẽ hiện ra lớp tương ứng
+            $('.option-tencn').change(function(event) {
+                var MaCN = $(this).val();
 
                 $.ajax({
                     url: duongdan + 'admin/locLop',
                     type: 'POST',
                     dataType: 'html',
-                    data: {MaK: MaK},
+                    data: {MaCN: MaCN},
                     success:function(data){
                         $('.option-tenlop').html(data);
                     }

@@ -7,16 +7,19 @@
     </ul>
 
     <!-- SEARCH FORM -->
-    <!-- <form class="form-inline ml-3">
+    <form class="form-inline ml-3">
         <div class="input-group input-group-sm">
-            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+            <!-- <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search"> -->
             <div class="input-group-append">
-                <button class="btn btn-navbar" type="submit">
+                <!-- <button class="btn btn-navbar" type="submit">
                     <i class="fas fa-search"></i>
-                </button>
+                </button> -->
+                <div class="text-dark text-uppercase font-weight-bold">
+                    Hệ thống quản lý - Đại học thủy lợi
+                </div>
             </div>
         </div>
-    </form> -->
+    </form>
 </nav>
 <!-- /.navbar -->
 
@@ -60,25 +63,22 @@
                     </a>
                 </li>
                 <li class="nav-item qlda">
-                    <a href="#" class="nav-link">
+                    <a href="<?= base_url(); ?>admin/quanlydoan" class="nav-link">
                         <i class="nav-icon fas fa-receipt"></i>
                         <p>
                             Quản lý đồ án
-                            <i class="right fas fa-angle-left"></i>
+                            <!-- <i class="right fas fa-angle-left"></i> -->
                         </p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item nav-con doan">
-                            <a href="<?= base_url(); ?>admin/quanlydoan" class="nav-link">
-                                <p>Đồ án</p>
-                            </a>
-                        </li>
-                        <li class="nav-item nav-con tttt">
-                            <a href="<?= base_url(); ?>admin/quanlythuctap" class="nav-link">
-                                <p>Thông tin thực tập</p>
-                            </a>
-                        </li>
-                    </ul>
+                </li>
+                <li class="nav-item qltt">
+                    <a href="<?= base_url(); ?>admin/quanlythuctap" class="nav-link">
+                        <i class="nav-icon fas fa-receipt"></i>
+                        <p>
+                            Quản lý thực tập
+                            <!-- <i class="right fas fa-angle-left"></i> -->
+                        </p>
+                    </a>
                 </li>
                 <li class="nav-item qltk">
                     <a href="#" class="nav-link">
@@ -116,6 +116,21 @@
                         <li class="nav-item nav-con addsv">
                             <a href="<?= base_url(); ?>admin/themtaikhoanSV" class="nav-link">
                                 <p>Sinh viên</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dangxuat">
+                    <a href="$" class="nav-link">
+                        <i class="nav-icon fas fa-cog"></i>
+                        <p>
+                            Cài đặt<i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item nav-con addgv">
+                            <a href="<?= base_url('admin/logout'); ?>" class="nav-link">
+                                <p>Đăng xuất</p>
                             </a>
                         </li>
                     </ul>

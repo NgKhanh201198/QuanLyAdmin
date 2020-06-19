@@ -139,6 +139,22 @@ select.option-tenlop {
     outline: none;
     text-align: left;
 }
+select.option-tencn {
+    border: 1px solid rgb(187, 187, 187);
+    border-radius: 0.25rem;
+    padding: 6px 0px;
+    margin: 5px;
+    outline: none;
+    text-align: left;
+}
+select.option-tenbomon {
+    border: 1px solid rgb(187, 187, 187);
+    border-radius: 0.25rem;
+    padding: 6px 0px;
+    margin: 5px;
+    outline: none;
+    text-align: left;
+}
 
 input.andi{
     border: none;

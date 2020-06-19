@@ -8,17 +8,52 @@ class Admin extends CI_Controller {
 		parent::__construct();
 		//Load Dependencies
 		$this->load->model('admin_model');
-
 	}
 	public function index()
 	{
-		$data = $this->admin_model->getMaxIdUser();
+		$this->load->view('dangnhap');
+		// echo "<pre>";
+		// var_dump($this->admin_model->getUserAdmin());
+		// echo "</pre>";
+	}
+
+	// Chức năng đăng nhập---------------------------------------------------------------------------------------------------
+	public function login()
+	{
+		$query = $this->admin_model->getUserAdmin();
 		$data = [
-		    'max' => $data
+		    'user' => $query
 		];
-		echo "<pre>";
-		var_dump($data['max']);
-		echo "</pre>";
+		$this->load->view('dangnhap', $data, false);
+	}
+
+	public function checkLogin()
+	{
+		$Username = $this->input->post('user-name');
+		$Password = $this->input->post('password');
+
+		$query = $this->admin_model->getUserAdmin();
+
+		foreach($query as $row)
+        {
+        	if ($row['Username'] == $Username && $row['Password'] == $Password) {
+    			 $newdata = array(
+	                'Username' => $row['Username'],
+	                'Password'   => $row['Password'],
+            	);
+			 	$this->session->set_userdata($newdata);
+        		redirect(base_url('admin/quanlygiangvien'));
+        	} else {
+        		redirect(base_url('admin/login'));
+        	}
+           
+        }
+	}
+	public function logout()
+	{
+		$array_items = array('Username', 'Password');
+    	$this->session->unset_userdata($array_items);
+    	redirect(base_url('admin/login'));
 	}
 
 	// Quản lý Sinh viên-----------------------------------------------------------------------------------------------------
@@ -44,13 +79,15 @@ class Admin extends CI_Controller {
 		$TenSV = $this->input->post('TenSV');
 		$NamSinh = $this->input->post('NamSinh');
 		// $Username = $this->input->post('Username');
-		// $TenKhoa = $this->input->post('TenK');
-		$Khoa = $this->input->post('Khoa');
+		// $TenKhoa = $this->input->post('TenKhoa');
+		// $TenCN = $this->input->post('TenCN');
+		// $Khoa = $this->input->post('Khoa');
 		$MaL = $this->input->post('MaL');
-		$Gmail = $this->input->post('Gmail');
+		$DiemTB = $this->input->post('DiemTB');
+		$Email = $this->input->post('Email');
 
-		if ($this->admin_model->updateSvByID($IdUser,$TenSV,$NamSinh,$Khoa,$MaL,$Gmail)) {
-			$this->load->view('quanlysinhvien_view');
+		if ($this->admin_model->updateSvByID($IdUser,$TenSV,$NamSinh,$DiemTB,$MaL,$Email)) {
+			echo 'Thành công';
 		}
 	}
 	public function xoasinhvien($id)
@@ -63,11 +100,32 @@ class Admin extends CI_Controller {
 	public function locLop()
 	{		
 		// echo 'da chay den day';
-		$MaK = $this->input->post('MaK');
-		$tbl_lop = $this->admin_model->getAllLopByTenK($MaK);
+		$MaCN = $this->input->post('MaCN');
+		$tbl_lop = $this->admin_model->getAllLopByTenCN($MaCN);
 		
 		foreach ($tbl_lop as $value) {
 			echo '<option value="'.$value['MaL'] .'"selected>'.$value['MaL'] .'</option>';
+		}
+	}
+	public function locChuyenNganh()
+	{		
+		// echo 'da chay den day';
+		$MaK = $this->input->post('MaK');
+		$chuyennghanh = $this->admin_model->getAllChuyenNghanhByTenK($MaK);
+		
+		echo '<option value="" selected>--Chuyên nghành--</option>';
+		foreach ($chuyennghanh as $value) {
+			echo '<option value="'.$value['MaCN'] .'"selected>'.$value['TenCN'] .'</option>';
+		}
+	}
+	public function locBoMon()
+	{		
+		// echo 'da chay den day';
+		$MaK = $this->input->post('MaK');
+		$bomon = $this->admin_model->getAllBoMonByTenK($MaK);
+
+		foreach ($bomon as $value) {
+			echo '<option value="'.$value['MaBoMon'] .'"selected>'.$value['TenBoMon'] .'</option>';
 		}
 	}
 
@@ -84,25 +142,34 @@ class Admin extends CI_Controller {
 	}
 	public function updateGV()
 	{
+
 		$IdUser = $this->input->post('IdUser');
         $TenGV = $this->input->post('TenGV');
-        // $Username = $this->input->post('Username');
+        $Username = $this->input->post('Username');
+        $TenKhoa = $this->input->post('TenKhoa');
         $MaK = $this->input->post('MaK');
-        $Chuyenmon = $this->input->post('Chuyenmon');
+        $TenBoMon = $this->input->post('TenBoMon');
+        $MaBoMon = $this->input->post('MaBoMon');
+        $Trinhdohocvan = $this->input->post('Trinhdohocvan');
+        $HuongNghienCuu = $this->input->post('HuongNghienCuu');
         $SDT = $this->input->post('SDT');
-        $Gmail = $this->input->post('Gmail');
+        $Email = $this->input->post('Email');
 
         // echo "<pre>";
         // var_dump($IdUser);
         // var_dump($TenGV);
         // var_dump($Username);
+        // var_dump($TenKhoa);
         // var_dump($MaK);
-        // var_dump($Chuyenmon);
+        // var_dump($TenBoMon);
+        // var_dump($MaBoMon);
+        // var_dump($Trinhdohocvan);
+        // var_dump($HuongNghienCuu);
         // var_dump($SDT);
-        // var_dump($Gmail);
+        // var_dump($Email);
         // echo "</pre>";
 
-		if ($this->admin_model->updateGvByID($IdUser,$TenGV,$MaK,$Chuyenmon,$SDT,$Gmail)) {
+		if ($this->admin_model->updateGvByID($IdUser,$TenGV,$MaBoMon,$Trinhdohocvan,$SDT,$Email, $HuongNghienCuu)) {
 			echo 'Thành công';
 		}
 	}
@@ -198,56 +265,48 @@ class Admin extends CI_Controller {
 	public function adduserGV()
 	{
 		$Username = $this->input->post('mgv');
-		$Password = $this->input->post('pass_gv');
+		$Password = $this->input->post('mgv');
 		$Role = '1';
 		$TenGV = $this->input->post('tengv');
-		$MaK = $this->input->post('option-tenkhoa');
-		$Chuyenmon = $this->input->post('chuyenmon');
+		$MaBoMon = $this->input->post('option-tenbomon');
+		$Trinhdohocvan = $this->input->post('trinhdohocvan');
+		$HuongNghienCuu = $this->input->post('huongnghiencuu');
 		$SDT = $this->input->post('sdt');
-		$Gmail = $this->input->post('gmail_gv');
-		// $Anh = $this->input->post('anh_gv');
-		$Anh = 'chua co';
-
-		// if ($Username=="" || $Password=="" || $TenGV=="" || $MaK=="" || $Chuyenmon=="" || $SDT=="" || $Gmail=="") {
-  //       } 
-  //       else {
+		$Email = $this->input->post('email_gv');
 
 		$this->admin_model->insertUser($Username,$Password,$Role);
 		$data = $this->admin_model->getMaxIdUser();
 		$IdUser = $data[0]['IdUser'];
-		if ($this->admin_model->insertGV($TenGV,$IdUser,$Anh,$MaK,$SDT,$Gmail,$Chuyenmon)) {
+		if ($this->admin_model->insertGV($TenGV,$IdUser,$MaBoMon,$Trinhdohocvan,$SDT,$Email,$HuongNghienCuu)) {
 			$this->load->view('themGV');
 		}
 
-        // }
 		// echo "<pre>";
 		// var_dump($Username);
 		// var_dump($Password);
 		// var_dump($Role);
 		// var_dump($TenGV);
-		// var_dump($MaK);
-		// var_dump($Chuyenmon);
+		// var_dump($MaBoMon);
+		// var_dump($Trinhdohocvan);
+		// var_dump($HuongNghienCuu);
 		// var_dump($SDT);
-		// var_dump($Gmail);
-		// var_dump($Anh);
-		// var_dump($IdUser);
+		// var_dump($Email);
+		// // var_dump($IdUser);
 		// echo "</pre>";
 
 	}
 	public function adduserSV()
 	{
 		$Username = $this->input->post('msv');
-		$Password = $this->input->post('pass_sv');
+		$Password = $this->input->post('msv');
 		$Role = '0';
 		$TenSV = $this->input->post('tensv');
 		$NamSinh = $this->input->post('namsinh');
 		$MaL = $this->input->post('option-tenlop');
 		// $MaK = $this->input->post('option-tenkhoa');
-		$Khoa = $this->input->post('khoa');
+		// $Khoa = $this->input->post('khoa');
 		$DiemTB = $this->input->post('dtb');
-		$Gmail = $this->input->post('gmail_sv');
-		// $Anh = $this->input->post('anh_gv');
-		$Anh = 'chua co';
+		$Email = $this->input->post('gmail_sv');
 
 		// echo "<pre>";
 		// var_dump($Username);
@@ -256,18 +315,17 @@ class Admin extends CI_Controller {
 		// var_dump($TenSV);
 		// var_dump($NamSinh);
 		// var_dump($MaL);
-		// var_dump($Khoa);
+		// // var_dump($Khoa);
 		// var_dump($DiemTB);
-		// var_dump($Anh);
-		// var_dump($Gmail);
+		// var_dump($Email);
 		// echo "</pre>";
 
-		// $this->admin_model->insertUser($Username,$Password,$Role);
-		// $data = $this->admin_model->getMaxIdUser();
-		// $IdUser = $data[0]['IdUser'];
-		// if ($this->admin_model->insertSV($TenSV,$IdUser,$Anh,$MaL,$Khoa,$DiemTB,$NamSinh,$Gmail)) {
-		// 	$this->load->view('themSV');
-		// }
+		$this->admin_model->insertUser($Username,$Password,$Role);
+		$data = $this->admin_model->getMaxIdUser();
+		$IdUser = $data[0]['IdUser'];
+		if ($this->admin_model->insertSV($TenSV,$IdUser,$MaL,$DiemTB,$NamSinh,$Email)) {
+			$this->load->view('themSV');
+		}
 	}
 	public function themtaikhoanGV()
 	{

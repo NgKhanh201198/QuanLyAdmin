@@ -1,24 +1,4 @@
-<?php 
-    // $Username = $this->input->post('mgv');
-    // $Password = $this->input->post('pass_gv');
-    // $Role = '1';
-    // $TenGV = $this->input->post('tengv');
-    // $MaK = $this->input->post('option-tenkhoa');
-    // $Chuyenmon = $this->input->post('chuyenmon');
-    // $SDT = $this->input->post('sdt');
-    // $Gmail = $this->input->post('gmail_gv');
-    // // $Anh = $this->input->post('anh_gv');
-    // $Anh = 'chua co';
 
-    // if (isset($_POST['submit'])) {
-    //     if ($Username=="" || $Password=="" || $TenGV=="" || $MaK=="" || $Chuyenmon=="" || $SDT=="" || $Gmail=="") {
-    //     echo "<script>alert('Bạn chưa điền đầy đủ thông tin');</script>";
-    //     }
-    //     else {
-    //         header('Location: http://localhost/MyJob/QuanLyDoAn/admin/addUserGV');
-    //     }
-    // }
- ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,6 +20,12 @@
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
+
+    <?php if ($this->session->has_userdata('Username') && $this->session->has_userdata('Password')): ?>
+    <?php else: ?>
+        <?php redirect(base_url('admin/login')); ?>
+    <?php endif ?>
+
     <div class="wrapper">
         <!-- Navbar -->
         <?php include('header.php'); ?>
@@ -52,7 +38,7 @@
                 </div>
             </div>
             <div class="container-fluid select-option">
-                <form action="addUserGV" method="post" enctype="multipart/form-data">
+                <form action="<?= base_url(); ?>admin/addUserGV" method="post" enctype="multipart/form-data">
                     <div class="select-option row">
                         <div class="col-sm-6"><a href="#" class="btn btn-dark btn-block btn-lg creOneUser">Tạo từng tài khoản</a></div>
                         <div class="col-sm-6"><a href="#" class="btn btn-dark  btn-block btn-lg creMultiUser">Tạo nhiều tài khoản</a></div>
@@ -68,8 +54,8 @@
                                 <input type="radio" name="user-type" id="gv" value="1">
                                 <label for="gv">Giảng Viên</label>
                             </div>
-                        </div>
- -->
+                        </div>-->
+                        
                         <!-- Tạo từng tài khoản------------------------------------------------------------------------------------------- -->
                         <div class="user--one">
                             <!-- Form giảng viên------------------------------------------------------------------------------------------ -->
@@ -79,8 +65,7 @@
                                     <input name="mgv" type="text" class="mgv show" required>
                                 </div>
                                 <div class="PASS_GV input-form">
-                                    <label> Password (Mặc định): </label>
-                                    <input name="pass_gv" type="text" value="daihocthuyloi" class="pass_gv show" required readonly>
+                                    <label> Password (Mặc định là mã giảng viên): </label>
                                 </div>
                                 <div class="TENGV input-form">
                                     <label> Tên giảng viên: </label>
@@ -88,27 +73,33 @@
                                 </div>
                                 <div class="TENKHOA input-form">
                                     <label> Khoa: </label>
-                                    <select class="option-tenkhoa" name="option-tenkhoa">
+                                    <select class="option-tenkhoa" name="option-tenkhoa" required>
+                                        <option value="" selected >--Chọn Khoa--</option>
                                         <?php foreach ($tenkhoa as $value): ?>
                                             <option value="<?= $value['MaK'] ?>"><?= $value['TenK'] ?></option>
                                         <?php endforeach ?>
                                     </select>  
                                 </div>
-                                <div class="CHUYENMON input-form">
-                                    <label> Chuyên môn: </label>
-                                    <input name="chuyenmon" type="text" class="chuyenmon show" required>
+                                <div class="tenbomon input-form">
+                                    <label> Bộ môn: </label>
+                                    <select class="option-tenbomon" name="option-tenbomon">
+                                    </select> 
+                                </div>
+                                <div class="TRINHDOHOCVAN input-form">
+                                    <label> Trình độ học vấn: </label>
+                                    <input name="trinhdohocvan" type="text" class="trinhdohocvan show" required>
+                                </div>
+                                <div class="HUONGNGHIENCUU input-form">
+                                    <label> Hướng nghiên cứu: </label>
+                                    <input name="huongnghiencuu" type="text" class="huongnghiencuu show" required>
                                 </div>
                                 <div class="SDT input-form">
                                     <label> Số điện thoại: </label>
                                     <input name="sdt" type="text" class="sdt show" required>
                                 </div>
-                                <div class="GMAIL_GV input-form">
+                                <div class="EMAIL_GV input-form">
                                     <label> Email: </label>
-                                    <input name="gmail_gv" type="email" class="gmail_gv show" required>
-                                </div>
-                                <div class="ANH_GV input-form">
-                                    <label> Ảnh (Không hỗ trợ tải ảnh): </label>
-                                    <input name="anh_gv" type="file" class="anh_gv show">
+                                    <input name="email_gv" type="email" class="email_gv show" required>
                                 </div>
                             </div>
                         </div>
@@ -142,6 +133,22 @@
     <script src="<?php echo base_url(); ?>bootstrap4/js/script.js"></script>
     <script>
         $(document).ready(function() {
+            var duongdan = '<?php echo base_url(); ?>';
+
+            // xử lý khi chọn khoa sẽ hiện ra bộ môn tương ứng
+            $('.option-tenkhoa').change(function(event) {
+                var MaK = $(this).val();
+
+                $.ajax({
+                    url: duongdan + 'admin/locBoMon',
+                    type: 'POST',
+                    dataType: 'html',
+                    data: {MaK: MaK},
+                    success:function(data){
+                        $('.option-tenbomon').html(data);
+                    }
+                });
+            });
 
             // Lựa chọn tài khoản sv và gv
             $('.optionSV').click(function(event) {

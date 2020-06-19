@@ -19,6 +19,12 @@
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
+
+    <?php if ($this->session->has_userdata('Username') && $this->session->has_userdata('Password')): ?>
+    <?php else: ?>
+        <?php redirect(base_url('admin/login')); ?>
+    <?php endif ?>
+
     <div class="wrapper">
         <!-- Navbar -->
         <?php include('header.php'); ?>
@@ -161,7 +167,7 @@
     <script>
         // thông báo khi đặt lại password
         function resetPassword() {
-          if (confirm("Mật khẩu sẽ đổi thành Mã giảng viên. Bạn có muốn tiếp tục?")) {return true;} else {return false;}
+          if (confirm("Mật khẩu mới sẽ đổi thành <Mã giảng viên> của tài khoản này. Bạn có muốn tiếp tục?")) {return true;} else {return false;}
         }
         // thông báo xóa tài khoản
         function deleteUser() {

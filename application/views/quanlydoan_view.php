@@ -19,6 +19,12 @@
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
+
+    <?php if ($this->session->has_userdata('Username') && $this->session->has_userdata('Password')): ?>
+    <?php else: ?>
+        <?php redirect(base_url('admin/login')); ?>
+    <?php endif ?>
+
     <div class="wrapper">
         <!-- Navbar -->
         <?php include('header.php'); ?>
@@ -88,7 +94,7 @@
                                     <th scope="row"><?= $value['TenSV'] ?></th>
                                     <td><?= $value['MaL'] ?></td>
                                     <td><?= $value['TenK'] ?></td>
-                                    <td class="trangthai"><?= $value['TrangThaiYeuCau'] ?></td>
+                                    <td class="trangthai"><?= $value['TrangThaiLamViec'] ?></td>
                                 </tr>
                             <?php endforeach ?>
                         </tbody>
@@ -119,25 +125,29 @@
                                             <label> Sinh viên thực hiện: </label>
                                             <input name="TenSV" type="text" value="<?= $value['TenSV'] ?>" class="TenSV andi" readonly>
                                         </div>
-                                        <div class="lop input-form">
-                                            <label> Lớp: </label>
-                                            <input name="MaL" type="text" value="<?= $value['MaL'] ?>" class="MaL andi" readonly>
+                                        <div class="nbd input-form">
+                                            <label> Thời gian đăng ký: </label>
+                                            <input name="ThoiGianTao" type="text" value="<?= date_format(date_create($value['ThoiGianTao']),"H:i:s - d/m/Y") ?>" class="ThoiGianTao andi" readonly>
                                         </div>
-                                        <div class="khoa input-form">
-                                            <label> Khoa: </label>
-                                            <input name="TenK" type="text" value="<?= $value['TenK'] ?>" class="TenK andi" readonly>
-                                        </div> 
                                         <div class="nbd input-form">
                                             <label> Ngày bắt đầu: </label>
-                                            <input name="ThoiGianBatDau" type="text" value="<?= date_format(date_create($value['ThoiGianBatDau']),"d/m/Y") ?>" class="ThoiGianBatDau andi" readonly>
+                                            <input name="NgayBatDau" type="text" value="<?= date_format(date_create($value['NgayBatDau']),"d/m/Y") ?>" class="NgayBatDau andi" readonly>
                                         </div>
                                         <div class="nkt input-form">
                                             <label> Ngày kết thúc: </label>
-                                            <input name="ThoiGianKetThuc" type="text" value="<?= date_format(date_create($value['ThoiGianKetThuc']),"d/m/Y") ?>" class="ThoiGianKetThuc andi" readonly>
+                                            <input name="NgayKetThuc" type="text" value="<?= date_format(date_create($value['NgayKetThuc']),"d/m/Y") ?>" class="NgayKetThuc andi" readonly>
+                                        </div>
+                                        <div class="nkt input-form">
+                                            <label> Ngày bảo vệ: </label>
+                                            <input name="NgayBaoVe" type="text" value="<?= date_format(date_create($value['NgayBaoVe']),"d/m/Y") ?>" class="NgayBaoVe andi" readonly>
+                                        </div>
+                                        <div class="svth input-form">
+                                            <label> Địa điểm bảo vệ: </label>
+                                            <input name="DiaDiemBaoVe" type="text" value="<?= $value['DiaDiemBaoVe'] ?>" class="DiaDiemBaoVe andi" readonly>
                                         </div>
                                         <div class="trangthai input-form">
                                             <label> Trạng thái: </label>
-                                            <input name="TrangThaiYeuCau" type="text" value="<?= $value['TrangThaiYeuCau'] ?>" class="TrangThaiYeuCau andi" readonly>
+                                            <input name="TrangThaiLamViec" type="text" value="<?= $value['TrangThaiLamViec'] ?>" class="TrangThaiLamViec andi" readonly>
                                         </div>
                                     </div>
                                     <div class="mt-2 multi-nut">
